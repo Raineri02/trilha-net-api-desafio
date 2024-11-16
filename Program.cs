@@ -4,20 +4,21 @@ using TrilhaApiDesafio.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configuração do DbContext com a string de conexão
 builder.Services.AddDbContext<OrganizadorContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
 
+// Configuração do JSON para suportar enums como strings
 builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Configuração do Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuração do pipeline de requisições
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
